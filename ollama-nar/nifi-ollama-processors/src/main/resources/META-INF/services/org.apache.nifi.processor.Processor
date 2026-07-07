@@ -1,1 +1,1 @@
-com.projecteh.nifi.processors.ollama.OllamaProcessor
+com.projecteh.nifi.processors.ollama.OllamaAgentProcessor
