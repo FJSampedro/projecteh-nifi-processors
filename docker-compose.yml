@@ -1,0 +1,14 @@
+version: '3'
+services:
+  nifi:
+    build:
+      context: .
+      dockerfile: deploy/dockerfiles/Dockerfile
+    image: nifi-gemini:latest
+    container_name: nifi-gemini
+    ports:
+      - "8443:8443"
+    environment:
+      - NIFI_WEB_HTTPS_PORT=8443
+      - SINGLE_USER_CREDENTIALS_USERNAME=admin
+      - SINGLE_USER_CREDENTIALS_PASSWORD=nifipassword123

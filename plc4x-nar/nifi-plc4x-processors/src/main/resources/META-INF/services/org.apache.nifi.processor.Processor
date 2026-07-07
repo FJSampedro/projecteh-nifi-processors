@@ -1,0 +1,2 @@
+com.projecteh.nifi.processors.plc4x.Plc4xReadProcessor
+com.projecteh.nifi.processors.plc4x.Plc4xWriteProcessor

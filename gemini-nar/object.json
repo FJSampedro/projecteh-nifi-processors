@@ -1,0 +1,52 @@
+{
+  "id": "usr_9f82c3d1a4e5b6c7",
+  "username": "alex_developer",
+  "email": "alex.dev@example.com",
+  "isActive": true,
+  "profile": {
+    "firstName": "Alex",
+    "lastName": "Martinez",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=alex",
+    "bio": "Full-stack developer passionate about agentic AI systems and reactive architectures.",
+    "skills": [
+      "JavaScript",
+      "TypeScript",
+      "Java",
+      "Docker",
+      "Apache NiFi",
+      "Python"
+    ]
+  },
+  "preferences": {
+    "theme": "dark-glassmorphism",
+    "notifications": {
+      "email": true,
+      "push": false,
+      "slack": true
+    },
+    "fontSize": 14,
+    "dashboardLayout": [
+      "metrics-panel",
+      "agent-chat",
+      "logs-terminal"
+    ]
+  },
+  "systemTelemetry": {
+    "cpuUsagePercent": 42.7,
+    "memoryUsageBytes": 8589934592,
+    "diskStatus": "healthy",
+    "uptimeSeconds": 172800,
+    "lastPing": "2026-05-18T15:22:16.000Z"
+  },
+  "tags": [
+    "developer",
+    "premium-user",
+    "beta-tester"
+  ],
+  "meta": {
+    "version": "1.0.4",
+    "environment": "development",
+    "generatedBy": "Antigravity AI Agent",
+    "seedValue": 4892019
+  }
+}
