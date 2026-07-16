@@ -2,8 +2,8 @@ version: '3'
 services:
   nifi:
     build:
-      context: .
-      dockerfile: deploy/dockerfiles/Dockerfile
+      context: ../../
+      dockerfile: deploy/dockerfiles/nifi/Dockerfile
     image: nifi-gemini:latest
     container_name: nifi-gemini
     ports:

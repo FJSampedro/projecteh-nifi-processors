@@ -10,32 +10,34 @@ El repositorio se organiza de forma modular. Cada procesador personalizado se en
 
 ```text
 projecteh-nifi-processors/
-├── gemini-nar/                # Procesador para Gemini Agent con soporte MCP
-│   ├── nifi-gemini-processors/
-│   ├── nifi-gemini-nar/
-│   ├── README.md
-│   └── pom.xml
-├── plc4x-nar/                 # Procesadores para PLCs industriales (Lectura y Escritura con PLC4X)
-│   ├── nifi-plc4x-processors/
-│   ├── nifi-plc4x-nar/
-│   ├── README.md
-│   └── pom.xml
-├── openai-nar/                # Procesador para OpenAI (ChatGPT)
-│   ├── nifi-openai-processors/
-│   ├── nifi-openai-nar/
-│   ├── README.md
-│   └── pom.xml
-├── claude-nar/                # Procesador para Anthropic Claude
-│   ├── nifi-claude-processors/
-│   ├── nifi-claude-nar/
-│   ├── README.md
-│   └── pom.xml
-├── ollama-nar/                # Procesador para Ollama (Modelos locales)
-│   ├── nifi-ollama-processors/
-│   ├── nifi-ollama-nar/
-│   ├── README.md
-│   └── pom.xml
-└── [nuevo-procesador-nar]/    # Estructura para futuros procesadores
+├── src/
+│   └── processors/
+│       ├── gemini-nar/                # Procesador para Gemini Agent con soporte MCP
+│       │   ├── nifi-gemini-processors/
+│       │   ├── nifi-gemini-nar/
+│       │   ├── README.md
+│       │   └── pom.xml
+│       ├── plc4x-nar/                 # Procesadores para PLCs industriales (Lectura y Escritura con PLC4X)
+│       │   ├── nifi-plc4x-processors/
+│       │   ├── nifi-plc4x-nar/
+│       │   ├── README.md
+│       │   └── pom.xml
+│       ├── openai-nar/                # Procesador para OpenAI (ChatGPT)
+│       │   ├── nifi-openai-processors/
+│       │   ├── nifi-openai-nar/
+│       │   ├── README.md
+│       │   └── pom.xml
+│       ├── claude-nar/                # Procesador para Anthropic Claude
+│       │   ├── nifi-claude-processors/
+│       │   ├── nifi-claude-nar/
+│       │   ├── README.md
+│       │   └── pom.xml
+│       └── ollama-nar/                # Procesador para Ollama (Modelos locales)
+│           ├── nifi-ollama-processors/
+│           ├── nifi-ollama-nar/
+│           ├── README.md
+│           └── pom.xml
+└── [nuevo-procesador-nar]/    # Estructura para futuros procesadores (dentro de src/processors/)
     ├── README.md
     └── pom.xml
 ```
@@ -56,14 +58,14 @@ Cada carpeta de procesador es un proyecto Maven independiente que genera un arch
 Para compilar y empaquetar un procesador específico localmente, navega a la carpeta correspondiente y ejecuta:
 
 ```bash
-cd <nombre-del-procesador-nar>
+cd src/processors/<nombre-del-procesador-nar>
 mvn clean install
 ```
 
 Esto generará el archivo `.nar` dentro del directorio `target/` del submódulo NAR. Por ejemplo, para el procesador Gemini:
 
 ```text
-gemini-nar/nifi-gemini-nar/target/nifi-gemini-nar-1.0-SNAPSHOT.nar
+src/processors/gemini-nar/nifi-gemini-nar/target/nifi-gemini-nar-1.0-SNAPSHOT.nar
 ```
 
 ### Compilación y Construcción mediante Docker (Recomendado)
@@ -71,12 +73,22 @@ gemini-nar/nifi-gemini-nar/target/nifi-gemini-nar-1.0-SNAPSHOT.nar
 Si no tienes Maven o Java instalados localmente, puedes compilar todos los procesadores y generar una imagen de Apache NiFi con los `.nar` preinstalados usando el Dockerfile de despliegue:
 
 ```bash
-docker build -t nifi-custom-processors -f deploy/dockerfiles/Dockerfile .
+docker build -t nifi-custom-processors -f deploy/dockerfiles/nifi/Dockerfile .
 ```
 
 Este comando:
 1. Utiliza una imagen intermedia de Maven para compilar todos los subproyectos (`gemini-nar`, `plc4x-nar`, etc.) sin necesidad de instalar dependencias en tu máquina local.
 2. Copia automáticamente los archivos `.nar` generados al directorio `/opt/nifi/nifi-current/lib/` de la imagen base de Apache NiFi.
+
+También puedes construir y arrancar el entorno completo (incluyendo NiFi con los procesadores instalados) usando Docker Compose:
+
+```bash
+# Construir la imagen con docker compose
+docker compose -f deploy/compose/docker-compose.yml build
+
+# Levantar el servicio
+docker compose -f deploy/compose/docker-compose.yml up -d
+```
 
 ---
 
@@ -94,7 +106,7 @@ Este repositorio funciona como la **fuente de compilación externa** para el rep
 Si deseas incorporar un nuevo procesador personalizado al catálogo de EagleHub, sigue estos pasos:
 
 1. **Crear la estructura del proyecto**:
-   Crea una nueva carpeta en la raíz del repositorio con el nombre del procesador (ej. `mi-procesador-nar`). Puedes utilizar los arquetipos oficiales de Apache NiFi para estructurar el proyecto Maven (`nifi-processor-bundle-archetype`).
+   Crea una nueva carpeta dentro del directorio `src/processors/` con el nombre del procesador (ej. `mi-procesador-nar`). Puedes utilizar los arquetipos oficiales de Apache NiFi para estructurar el proyecto Maven (`nifi-processor-bundle-archetype`).
 
 2. **Implementar el código fuente**:
    Desarrolla la lógica en el submódulo de procesadores correspondiente (`nifi-mi-procesador-processors`).
